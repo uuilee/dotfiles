@@ -30,6 +30,11 @@
 (setq auto-save-list-file-prefix emacs-tmp-dir)
 
 
+;; Mac OSX platform config
+(when (memq window-system '(mac ns))
+  (exec-path-from-shell-initialize))
+
+
 ;; useful methods
 (defun find-user-init-file ()
   "Edit the `user-init-file', in another window."
