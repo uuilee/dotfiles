@@ -16,6 +16,11 @@
 (load-theme 'wombat t)
 
 
+;; navigation
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
+
+
 ;; plugin settings
 (projectile-global-mode)
 (autoload 'dirtree "dirtree" "Add directory to tree view" t)
