@@ -1,29 +1,54 @@
-;; package manager settings
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+
+;;;; defaults
+(setq default-directory "~/Dev/Code")
+
+
+;;;; package manager settings
 (require 'package)
 (package-initialize)
 (add-to-list 'package-archives
 '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 
-;; add custom load
+;;;; add custom load
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (add-to-list 'load-path "~/.emacs.d/")
 
 
-;; editor and layout
+;;;; editor and layout
 (tool-bar-mode -1)
 (global-linum-mode 1)
 (load-theme 'wombat t)
 
 
-;; navigation
+;;;; navigation
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
 
 
-;; plugin settings
+;;;; plugin settings
+;; projectile
 (projectile-global-mode)
-(autoload 'dirtree "dirtree" "Add directory to tree view" t)
+;; auto-complete
+(require 'auto-complete-config) ; Load the default configuration
+(add-to-list 'ac-dictionary-directories "~/.emacs.d/auto-complete/dict") ; dicts path
+(setq-default ac-sources (add-to-list 'ac-sources 'ac-source-dictionary))
+(global-auto-complete-mode t) ; Start auto-completion after 2 characters of a word
+(setq ac-auto-start 2) ; case sensitivity is important when finding matches
+(setq ac-ignore-case nil)
+;; yasnippet
+(require 'yasnippet)
+(yas-global-mode 1)
+(yas-load-directory "~/.emacs.d/yasnippet/snippets")
+(add-to-list 'ac-sources 'ac-source-yasnippet)
+;; flycheck
+(add-hook 'after-init-hook #'global-flycheck-mode)
+;; js3-mode
+;(autoload 'js3-mode "js3" nil t)
+;(add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
 
 
 ;; put auto save files into default tmp directory
@@ -45,4 +70,7 @@
   "Edit the `user-init-file', in another window."
   (interactive)
   (find-file-other-window user-init-file))
+
+
+;;; init.el ends here
 
