@@ -46,6 +46,14 @@
 (add-to-list 'ac-sources 'ac-source-yasnippet)
 ;; flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
+;; web-beautify
+(eval-after-load 'js
+  '(define-key js-mode-map (kbd "C-c b") 'web-beautify-js))
+(eval-after-load 'sgml-mode
+  '(define-key html-mode-map (kbd "C-c b") 'web-beautify-html))
+(eval-after-load 'css-mode
+  '(define-key css-mode-map (kbd "C-c b") 'web-beautify-css))
+
 ;; js3-mode
 ;(autoload 'js3-mode "js3" nil t)
 ;(add-to-list 'auto-mode-alist '("\\.js$" . js3-mode))
@@ -70,7 +78,10 @@
   "Edit the `user-init-file', in another window."
   (interactive)
   (find-file-other-window user-init-file))
-
+(defun load-user-init-file ()
+  "Load the `user-init-file'."
+  (interactive)
+  (load-file user-init-file))
 
 ;;; init.el ends here
 
