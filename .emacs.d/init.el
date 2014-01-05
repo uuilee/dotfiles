@@ -20,13 +20,27 @@
 
 ;;;; editor and layout
 (tool-bar-mode -1)
+(scroll-bar-mode -1)
 (global-linum-mode 1)
+(show-paren-mode 1)
 (load-theme 'wombat t)
+(require 'redo+)
+(define-key global-map (kbd "C-.") 'undo)
+(define-key global-map (kbd "C-/") 'redo)
 
 
-;;;; navigation
+;;;; window and folder navigation
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
+(require 'ido)
+(ido-mode t)
+(require 'direx)
+(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory)
+(require 'popwin)
+(popwin-mode 1)
+(push '(direx:direx-mode :position left :width 40 :dedicated t)
+      popwin:special-display-config)
+(global-set-key (kbd "C-x C-j") 'direx:jump-to-directory-other-window)
 
 
 ;;;; plugin settings
@@ -77,7 +91,7 @@
 (defun find-user-init-file ()
   "Edit the `user-init-file', in another window."
   (interactive)
-  (find-file-other-window user-init-file))
+  (find-file user-init-file))
 (defun load-user-init-file ()
   "Load the `user-init-file'."
   (interactive)
